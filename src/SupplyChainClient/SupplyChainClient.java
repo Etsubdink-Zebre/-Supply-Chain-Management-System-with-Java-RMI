@@ -24,7 +24,7 @@ public class SupplyChainClient {
      */
     public static void main(String[] args) {
         try {
-          
+
             Registry reg = LocateRegistry.getRegistry("localhost", 1888);
             SupplyChain stub = (SupplyChain) reg.lookup("SupplyChainServer");
             Scanner scanner = new Scanner(System.in);
@@ -43,10 +43,9 @@ public class SupplyChainClient {
 
             products = stub.getProducts();
             System.out.println("Product list after adding a new product: " + products);
-
+            scanner.nextLine();
             System.out.println("Enter the name of the product to update:");
             String nameToUpdate = scanner.nextLine();
-           
 
             Product productToUpdate = null;
             for (Product product : products) {
@@ -60,12 +59,17 @@ public class SupplyChainClient {
                 System.out.println("Product not found.");
             } else {
                 System.out.println("Enter the new price:");
-                double newPrice = scanner.nextDouble();
+                double newPrice = Double.parseDouble(scanner.nextLine());
                 productToUpdate.setPrice(newPrice);
+
+                System.out.println("Enter the new quantity:");
+                int newQuantity = Integer.parseInt(scanner.nextLine());
+                productToUpdate.setQuantity(newQuantity);
+
                 stub.updateProduct(productToUpdate);
                 products = stub.getProducts();
-                System.out.println("Product list after updating the price of " + productToUpdate.getName() + ": " + products);
-            
+                System.out.println("Product list after updating " + productToUpdate.getName() + ": " + products);
+
                 stub.removeProduct(productToUpdate);
                 products = stub.getProducts();
                 System.out.println("Product list after removing " + productToUpdate.getName() + ": " + products);
@@ -74,7 +78,6 @@ public class SupplyChainClient {
             System.err.println("SupplyChainClient exception: " + e.toString());
             e.printStackTrace();
         }
-            
-            
+
     }
 }
