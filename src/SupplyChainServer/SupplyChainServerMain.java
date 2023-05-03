@@ -21,12 +21,13 @@ public class SupplyChainServerMain {
 
     public static void main(String[] args) {
         try {
-            SupplyChainServer supplyChainServer = new SupplyChainServer();
+            //SupplyChainServer supplyChainServer = new SupplyChainServer();
 
             Registry reg = LocateRegistry.createRegistry(1888);
             reg.rebind("SupplyChainServer", new SupplyChainServer());
 
             System.out.println("SupplyChainServer is running...");
+            
         } catch (Exception e) {
             System.err.println("SupplyChainServer exception: " + e.toString());
             e.printStackTrace();

@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author admin
@@ -34,9 +35,11 @@ public class SupplyChainServer extends UnicastRemoteObject implements SupplyChai
     }
 
     public void updateProduct(Product p) throws RemoteException {
-        int index = products.indexOf(p);
-        if (index != -1) {
-            products.set(index, p);
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getName().equals(p.getName())) {
+                products.set(i, p);
+                break;
+            }
         }
     }
 }

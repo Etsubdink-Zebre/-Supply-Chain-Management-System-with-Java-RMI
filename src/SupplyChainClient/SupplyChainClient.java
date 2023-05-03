@@ -66,13 +66,24 @@ public class SupplyChainClient {
                 int newQuantity = Integer.parseInt(scanner.nextLine());
                 productToUpdate.setQuantity(newQuantity);
 
-                stub.updateProduct(productToUpdate);
-                products = stub.getProducts();
-                System.out.println("Product list after updating " + productToUpdate.getName() + ": " + products);
+               
+                System.out.print("Enter the name of the product to remove: ");
+                String productName = scanner.nextLine();
+                Product productToRemove = null;
+                for (Product product : products) {
+                    if (product.getName().equals(productName)) {
+                        productToRemove = product;
+                        break;
+                    }
+                }
+                if (productToRemove != null) {
+                    stub.removeProduct(productToRemove);
+                    products = stub.getProducts();
+                    System.out.println("Product list after removing " + productName + ": " + products);
+                } else {
+                    System.out.println("Product not found");
+                }
 
-                stub.removeProduct(productToUpdate);
-                products = stub.getProducts();
-                System.out.println("Product list after removing " + productToUpdate.getName() + ": " + products);
             }
         } catch (Exception e) {
             System.err.println("SupplyChainClient exception: " + e.toString());
